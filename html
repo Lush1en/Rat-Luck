@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rat Luck</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+    .slots {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .slot {
+      width: 80px;
+      height: 80px;
+      background-color: #333;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      box-shadow: 0 0 10px #000;
+    }
+    button {
+      background-color: #444;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #666;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      height: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rat Luck</h1>
+  <div class="slots">
+    <div class="slot" id="slot1">?</div>
+    <div class="slot" id="slot2">?</div>
+    <div class="slot" id="slot3">?</div>
+  </div>
+  <button onclick="roll()">Start</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    function weightedRandom() {
+      // Beispielgewichtung: höhere Chance für kleinere Zahlen
+      const weights = [5, 4, 3, 2, 1]; // Gewichtung für 1 bis 5
+      const pool = [];
+      for (let i = 1; i <= 5; i++) {
+        for (let j = 0; j < weights[i - 1]; j++) {
+          pool.push(i);
+        }
+      }
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function roll() {
+      const s1 = weightedRandom();
+      const s2 = weightedRandom();
+      const s3 = weightedRandom();
+
+      document.getElementById('slot1').textContent = s1;
+      document.getElementById('slot2').textContent = s2;
+      document.getElementById('slot3').textContent = s3;
+
+      if (s1 === s2 && s2 === s3) {
+        document.getElementById('result').textContent = "🎉 Win: " + s1;
+      } else {
+        document.getElementById('result').textContent = "Lose😢";
+      }
+    }
+  </script>
+</body>
+</html>
